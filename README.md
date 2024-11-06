@@ -1,107 +1,97 @@
-# VITS-Based-Gujarati-Text-to-Speech-Model
+# 🎙️ VITS-Based Gujarati Text-to-Speech Model
 
-Author: Patel Kashyap KalpeshkumarRegistration Number: 21BCE0216
+**Author**: Patel Kashyap Kalpeshkumar  
+**Registration Number**: 21BCE0216  
+**Email**: [kashyappatel2673@gmail.com](mailto:kashyappatel2673@gmail.com)  
+**GitHub Repository**: [VITS-Based-Gujarati-Text-to-Speech-Model](https://github.com/DeAtHfIrE26/VITS-Based-Gujarati-Text-to-Speech-Model)
 
-Overview
+---
 
-This project implements a VITS (Variational Inference Text-to-Speech) model to generate high-quality audio from text in Gujarati. The model leverages deep learning to create natural-sounding synthesized speech, which can be useful for applications such as voice assistants, language learning tools, and personalized TTS systems.
+## 📌 Overview
 
-Table of Contents
+This project provides a **VITS (Variational Inference Text-to-Speech)** model for synthesizing natural-sounding Gujarati speech from text. It’s ideal for applications like **voice assistants**, **language learning tools**, and **personalized TTS systems**.
 
-Overview
+---
 
-Project Features
+## 📑 Table of Contents
 
-Prerequisites
+- [Overview](#-overview)
+- [Features](#-features)
+- [Prerequisites](#-prerequisites)
+- [Setup Instructions](#-setup-instructions)
+- [Training the Model](#-training-the-model)
+- [Generating Audio](#-generating-audio)
+- [Evaluation](#-evaluation)
+- [Troubleshooting](#-troubleshooting)
+- [Contact](#-contact)
 
-Setup Instructions
+---
 
-Training the Model
+## 🌟 Features
 
-Generating Audio from Text
+- **Gujarati TTS**: Converts Gujarati text into natural-sounding audio.
+- **Customizable Training**: Supports retraining with new datasets or other languages.
+- **Checkpoint Saving**: Automatically saves model checkpoints based on validation performance.
+- **Visualization Tools**: Generates waveforms and spectrograms for synthesized audio.
 
-Evaluation
+---
 
-Troubleshooting
+## 🛠️ Prerequisites
 
-Contact
+Make sure you have:
 
-Project Features
+- Python 3.8 or later
+- CUDA-enabled GPU or Google Colab (recommended for training)
+- PyTorch 1.9.0+ with GPU support
+- All packages in `requirements.txt`
 
-Gujarati Text-to-Speech Conversion: Converts text written in Gujarati into natural-sounding audio.
+---
 
-Customizable Training: Allows training with a new dataset or language.
+## ⚙️ Setup Instructions
 
-Checkpoint Saving: Saves the best model during training based on validation performance.
-
-Interactive Visualization: Provides waveform and spectrogram visualizations of synthesized audio.
-
-Prerequisites
-
-Make sure you have the following installed:
-
-Python 3.8 or newer
-
-Google Colab or a machine with a CUDA-enabled GPU (for training)
-
-PyTorch 1.9.0 or newer with GPU support
-
-Required Python packages (listed in requirements.txt)
-
-Setup Instructions
-
-Clone the Repository
-
-git clone https://github.com/your-repo-name/vits-gujarati-tts.git
-cd vits-gujarati-tts
-
-Install Dependencies
-Create a virtual environment (optional but recommended) and install the necessary packages:
-
+### 1. Clone the Repository
+```bash
+git clone https://github.com/DeAtHfIrE26/VITS-Based-Gujarati-Text-to-Speech-Model.git
+cd VITS-Based-Gujarati-Text-to-Speech-Model
+2. Install Dependencies
+Create a virtual environment (optional but recommended) and install required packages:
+```
+bash
+Copy code
 python3 -m venv vits_env
-source vits_env/bin/activate  # On Windows use `vits_env\Scripts\activate`
+source vits_env/bin/activate  # On Windows, use `vits_env\Scripts\activate`
 pip install -r requirements.txt
+3. Mount Google Drive (for Colab Users)
+To save checkpoints in Google Drive, use the following code in Colab:
 
-Mount Google Drive (for Checkpoints)
-To store checkpoints during training, mount your Google Drive in Google Colab:
-
+python
+Copy code
 from google.colab import drive
 drive.mount('/content/drive')
+4. Edit Configuration
+Modify configs/config_gujarati.json for dataset paths and language settings.
 
-Set Up Configuration
+🏋️‍♂️ Training the Model
+Dataset Preparation
+Prepare paired audio (.wav) and text (.txt) files. Organize them into training, validation, and test folders.
 
-Modify the configs/config_gujarati.json file to match your dataset and language preferences.
+Start Training
+Run the training script with the following command:
 
-Training the Model
-
-Prepare Your Dataset
-
-Ensure you have audio (.wav) and corresponding text (.txt) pairs ready for training.
-
-Organize your dataset into training, validation, and test sets.
-
-Run the Training Script
-
-Train the model using the following command:
-
+bash
+Copy code
 python train.py --config configs/config_gujarati.json
+Model checkpoints will be saved to /content/drive/MyDrive/vits_checkpoints/.
 
-During training, model checkpoints will be saved to /content/drive/MyDrive/vits_checkpoints/.
+🎶 Generating Audio
+Load Pre-trained Model
+Ensure best_model.pth is in /content/drive/MyDrive/vits_checkpoints/.
 
-Monitor Training
+Generate Audio from Text
+Use the following script to generate audio from input text:
 
-You can use print statements or TensorBoard to monitor the progress of training.
-
-Generating Audio from Text
-
-Load the Pre-trained Model
-
-Ensure best_model.pth is available in /content/drive/MyDrive/vits_checkpoints/.
-
-Run the Audio Generation Script
-
-Use the script below to generate audio from input text:
-
+python
+Copy code
 import torch
 import json
 import numpy as np
@@ -115,26 +105,24 @@ config_path = 'configs/config_gujarati.json'
 with open(config_path, 'r') as f:
     config = json.load(f)
 
-# Load model (replace with actual implementation)
+# Load pre-trained model
 model = torch.load(model_checkpoint, map_location='cpu')
 model.eval()
 
 # Input text
 input_text = "તમારો ગુજરાતી ટેક્સ્ટ અહીં"
-# Placeholder for text-to-sequence conversion and audio generation
-# Replace with the actual implementation
-synthesized_audio = np.sin(np.linspace(0, 1000, 22050))  # Example dummy audio
 
-# Save and play synthesized audio
+# Generate audio (dummy audio example, replace with actual TTS implementation)
+synthesized_audio = np.sin(np.linspace(0, 1000, 22050))  # Replace with actual generation
+
+# Save and play audio
 sf.write('synthesized_output.wav', synthesized_audio, config['sample_rate'])
 Audio('synthesized_output.wav')
+📊 Evaluation
+To evaluate the model on the validation set, use evaluate.py. You can visualize the waveform and spectrogram with the following code:
 
-Evaluation
-
-Run Evaluation Script: Use evaluate.py to assess the model's performance on the validation set.
-
-Visualization: You can visualize the generated waveform and spectrogram using librosa and matplotlib:
-
+python
+Copy code
 import librosa
 import librosa.display
 import matplotlib.pyplot as plt
@@ -146,23 +134,14 @@ plt.title('Waveform')
 plt.xlabel('Time (s)')
 plt.ylabel('Amplitude')
 plt.show()
+🛠️ Troubleshooting
+FileNotFoundError: Verify file paths and ensure all required files are correctly placed.
+Checkpoint Missing: Confirm best_model.pth exists in the specified directory.
+Training Errors: Check dataset formatting and enable GPU support if available.
+📬 Contact
+For any questions or collaboration requests, feel free to reach out!
 
-Troubleshooting
-
-FileNotFoundError: Ensure that all file paths are correct, and files are in the specified directories.
-
-Checkpoint Not Found: Verify that best_model.pth is present in the checkpoints directory.
-
-Training Issues: Double-check the dataset alignment and ensure GPU support is enabled if available.
-
-Contact
-
-If you have any questions or need support, please feel free to contact:
-
-Patel Kashyap Kalpeshkumar
-
+Author: Patel Kashyap Kalpeshkumar
 Registration Number: 21BCE0216
-
-Email: your-email@example.com(Replace with your contact email)
-
-Thank you for exploring this project! Feel free to contribute or reach out for collaboration.
+Email: kashyappatel2673@gmail.com
+Thank you for exploring this project! Contributions and collaborations are welcome. 😊
